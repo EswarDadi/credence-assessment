@@ -65,9 +65,9 @@ app.post("/movies/",async(request,response)=>{
     const postMovieQuery=`INSERT INTO 
     movie(name,img,summary)
     VALUES
-    ('${name}','${img}'${summary}')
+    (?,?,?)
     `;
-    await database.run(postMovieQuery)
+    await database.run(postMovieQuery,[name,img,summary])
     response.send("movie added successfully")
 })
 
@@ -91,14 +91,14 @@ app.put("/movies/:id/", async(request,response)=>{
     UPDATE
     movie
     SET
-    name='${name}',
-    img='${img}',
-    summary='${summary}'
+    name=?,
+    img=?,
+    summary=?
     WHERE
-    id=${id}
+    id=?
 
     `;
-    await database.run(updateMovieQuery)
+    await database.run(updateMovieQuery,[name,img,summary,id])
     response.send("movie details updated")
 })
 
